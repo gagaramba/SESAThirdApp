@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.fragment_placeholder, mainFragment);
+        fragmentTransaction.add(R.id.main_fragment_placeholder, mainFragment);
         fragmentTransaction.commit();
     }
 
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
         if (view == findViewById(R.id.button1)){
             onStoreText();
             Log.d(LOGTAG, "button1 press");
-            fragmentTransaction.replace(R.id.fragment_placeholder, displayMessageFragment);
+            fragmentTransaction.add(R.id.fragment_placeholder, displayMessageFragment);
             Log.d(LOGTAG, "change fragment to displaymessage");
         } else {
             fragmentTransaction.replace(R.id.fragment_placeholder, mainFragment);
