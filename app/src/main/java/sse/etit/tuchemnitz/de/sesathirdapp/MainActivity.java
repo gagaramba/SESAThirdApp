@@ -61,25 +61,40 @@ public class MainActivity extends Activity {
     }
 
     public void onSelectFragment(View view){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        String beSure;
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (view == findViewById(R.id.button1)){
             onStoreText();
-            Log.d(LOGTAG, "button1 press");
-            fragmentTransaction.add(R.id.fragment_placeholder, displayMessageFragment);
-            Log.d(LOGTAG, "change fragment to displaymessage");
+                Log.d(LOGTAG, "button1 press");
+
+            if (fragmentManager.getBackStackEntryCount() > 0){
+                fragmentTransaction.remove(displayMessageFragment);
+                    Log.d(LOGTAG, "remove fragment displayMessage");
+
+                fragmentTransaction.add(R.id.fragment_placeholder, displayMessageFragment);
+                    Log.d(LOGTAG, "add fragment displayMessage");
+
+            } else {
+                fragmentTransaction.add(R.id.fragment_placeholder, displayMessageFragment);
+                fragmentTransaction.addToBackStack(null);
+                    Log.d(LOGTAG, "add fragment displayMessage - no remove");
+
+            }
+
         } else {
             fragmentTransaction.replace(R.id.fragment_placeholder, mainFragment);
-            Log.d(LOGTAG, "change fragment to main");
+                Log.d(LOGTAG, "change fragment to main");
         }
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
     public void onStoreText(){
         EditText editText = (EditText) findViewById(R.id.editText1);
         String parameter = editText.getText().toString();
-        Log.i(LOGTAG, "Save String " + parameter);
+            Log.i(LOGTAG, "Save String " + parameter);
 
         bundle.putString(HANDOVER_PARAMETER, parameter);
     }
